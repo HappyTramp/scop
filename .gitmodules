@@ -1,0 +1,4 @@
+[submodule "vendor/libft"]
+	path = vendor/libft
+	url = https://github.com/HappyTramp/libft
+	branch = scop
