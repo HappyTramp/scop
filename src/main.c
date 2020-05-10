@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 10:20:09 by charles           #+#    #+#             */
-/*   Updated: 2020/05/09 11:08:59 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/10 22:02:36 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int main(int argc, char **argv)
 {
 	/* GLFWwindow	*window; */
-	float		*buffer;
+	t_object	object;
 
 	if (argc != 2)
 	{
@@ -24,9 +24,20 @@ int main(int argc, char **argv)
 		ft_putendl(" [obj file]");
 		return (1);
 	}
-	if ((buffer = parse(argv[1])) == NULL)
-		return 1;
+	if (parse(argv[1], &object) == -1)
+	{
+		ft_putstr("Error: couldn't parse ");
+		ft_putendl(argv[1]);
+		return (1);
+	}
 
+	for (size_t i = 0; i < object.indices_len; i++)
+		printf("%u\n", object.indices[i]);
+	for (size_t i = 0; i < object.vertices_len; i++)
+		printf("%f\n", object.vertices[i]);
+
+	free(object.vertices);
+	free(object.indices);
 	/* if (!glfwInit()) */
 	/* 	return 1; */
 	/* window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL); */
