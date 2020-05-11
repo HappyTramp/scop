@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 10:20:09 by charles           #+#    #+#             */
-/*   Updated: 2020/05/11 02:14:14 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/11 10:49:17 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,16 @@ int main(int argc, char **argv)
 		return (1);
 	while (!glfwWindowShouldClose(window))
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
+		GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
+		GL_CALL(glUseProgram(state.shader));
+		GL_CALL(glBindVertexArray(state.vertex_array));
+		GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, state.index_buf));
+		GL_CALL(glDrawElements(GL_TRIANGLES, object.vertices_len, GL_UNSIGNED_INT, (const void*)0));
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+	gl_state_quit(&state, &object);
+	glfwDestroyWindow(window);
 	glfwTerminate();
-	free(object.vertices);
-	free(object.indices);
 	return 0;
 }

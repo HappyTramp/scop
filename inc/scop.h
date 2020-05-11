@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 10:41:44 by charles           #+#    #+#             */
-/*   Updated: 2020/05/11 02:10:09 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/11 10:33:29 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ typedef struct
 {
 	unsigned int	vertex_buf;
 	unsigned int	index_buf;
+	unsigned int	vertex_array;
+	unsigned int	shader;
 }					t_gl_state;
 
 /*
@@ -46,7 +48,8 @@ int					parse(char *filepath, t_object *object);
 ** gl.c
 */
 
-int	gl_state_init(t_gl_state *state, t_object *object);
+int					gl_state_init(t_gl_state *state, t_object *object);
+void				gl_state_quit(t_gl_state *state, t_object *object);
 
 /*
 ** error.c
@@ -64,5 +67,11 @@ void				error_check(char *code, char *filename, int line_num);
 */
 
 GLFWwindow			*glfw_init(int width, int height);
+
+/*
+** shader.c
+*/
+
+unsigned int	shader_new(void);
 
 #endif
