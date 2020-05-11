@@ -6,7 +6,7 @@
 #    By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/09 10:24:52 by charles           #+#    #+#              #
-#    Updated: 2020/05/10 21:06:25 by charles          ###   ########.fr        #
+#    Updated: 2020/05/11 01:55:58 by charles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJ_DIR = obj
 
 CC = gcc
 CCFLAGS = -I$(LIBFT_DIR)/include -I$(INC_DIR) \
-		  -Wall -Wextra -Werror
+		  -Wall -Wextra #-Werror
 LDFLAGS = -L$(LIBFT_DIR) -lft
 
 ifeq ($(shell uname),Linux)
@@ -48,7 +48,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
 cleanloc:
 	$(RM) $(OBJ)
 
-fcleanloc:
+fcleanloc: cleanloc
 	$(RM) $(NAME)
 
 reloc: fcleanloc all

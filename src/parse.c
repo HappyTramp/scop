@@ -6,27 +6,37 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:02:00 by charles           #+#    #+#             */
-/*   Updated: 2020/05/10 22:04:05 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/11 01:29:13 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
-#define SCOP_VEC_DEFAULT_SIZE 32
+#define SCOP_VEC_DEFAULT_SIZE 64
 
 static int	st_parse_face(char **indexes_strs, t_ftvec *indices)
 {
 	size_t			i;
 	size_t			len;
+	unsigned int	first;
 	unsigned int	tmp;
 
 	len = ft_split_len(indexes_strs);
-	i = -1;
-	while (++i < len)
+	first = ft_atoi(indexes_strs[0]);
+	/* if (ft_vecpush(indices, *(void**)&first) == NULL) */
+	/* 	return (-1); */
+	i = 1;
+	while (i < len - 1)
 	{
+		if (ft_vecpush(indices, *(void**)&first) == NULL)
+			return (-1);
 		tmp = ft_atoi(indexes_strs[i]);
 		if (ft_vecpush(indices, *(void**)&tmp) == NULL)
 			return (-1);
+		tmp = ft_atoi(indexes_strs[i + 1]);
+		if (ft_vecpush(indices, *(void**)&tmp) == NULL)
+			return (-1);
+		i++;
 	}
 	return (0);
 }
