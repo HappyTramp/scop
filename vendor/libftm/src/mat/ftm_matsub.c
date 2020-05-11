@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftm.h                                           :+:      :+:    :+:   */
+/*   ftm_matsub.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/09 20:48:30 by charles           #+#    #+#             */
-/*   Updated: 2020/05/09 21:11:12 by charles          ###   ########.fr       */
+/*   Created: 2020/05/11 12:56:00 by charles           #+#    #+#             */
+/*   Updated: 2020/05/11 13:06:43 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTM_VEC4_H
-# define LIBFTM_VEC4_H
+#include "libftm_mat.h"
 
-/*
-** \brief   4 component vector [x, y, z, w]
-*/
-
-typedef struct
+t_ftmmat	*ftm_matsub(t_ftmmat *dst, t_ftmmat *other)
 {
-	float	v[4];
-}			t_ftmvec4;
+	size_t	i;
+	size_t	size;
 
-t_ftmvec4	*ftm_vec4add(t_ftmvec4 *dst, t_ftmvec4 *other);
-t_ftmvec4	*ftm_vec4sub(t_ftmvec4 *dst, t_ftmvec4 *other);
-float		ftm_vec4dot(t_ftmvec4 *a, t_ftmvec4 *b);
-t_ftmvec4	*ftm_vec4scale(t_ftmvec4 *dst, float scalar);
-
-#endif
+	if (dst->shape.x != other->shape.x || dst->shape.y != other->shape.y)
+		return (NULL);
+	size = dst->shape.x * dst->shape.y;
+	i = 0;
+	while (i < size)
+	{
+		dst->m[i] -= other->m[i];
+		i++;
+	}
+	return (dst);
+}

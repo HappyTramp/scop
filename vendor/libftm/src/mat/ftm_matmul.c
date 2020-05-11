@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ftm_vec3scale.c                                    :+:      :+:    :+:   */
+/*   ftm_matmul.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/09 21:00:32 by charles           #+#    #+#             */
-/*   Updated: 2020/05/09 21:14:10 by charles          ###   ########.fr       */
+/*   Created: 2020/05/11 12:56:00 by charles           #+#    #+#             */
+/*   Updated: 2020/05/11 13:27:08 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftm_vec3.h"
+#include "libftm_mat.h"
 
-t_ftmvec3	*ftm_vec3scale(t_ftmvec3 *dst, float scalar)
+t_ftmmat	*ftm_matmul(t_ftmmat *dst, t_ftmmat *other)
 {
-	dst->v[0] *= scalar;
-	dst->v[1] *= scalar;
-	dst->v[2] *= scalar;
+	(void)other;
 	return (dst);
 }

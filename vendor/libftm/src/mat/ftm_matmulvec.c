@@ -1,22 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ftm_vec4add.c                                      :+:      :+:    :+:   */
+/*   ftm_matmulvec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/09 20:45:59 by charles           #+#    #+#             */
-/*   Updated: 2020/05/09 21:15:07 by charles          ###   ########.fr       */
+/*   Created: 2020/05/11 12:56:00 by charles           #+#    #+#             */
+/*   Updated: 2020/05/11 13:18:10 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftm_vec4.h"
+#include "libftm_mat.h"
 
-t_ftmvec4	*ftm_vec4add(t_ftmvec4 *dst, t_ftmvec4 *other)
+t_ftmvec	*ftm_matmulvec(t_ftmmat *mat, t_ftmvec *dst)
 {
-	dst->v[0] += other->v[0];
-	dst->v[1] += other->v[1];
-	dst->v[2] += other->v[2];
-	dst->v[3] += other->v[3];
+	size_t		i;
+	t_ftmmat	*tmp;
+
+	if ((tmp = ftm_matnew(dst->size, 1)) == NULL)
+		return (NULL);
+	i = 0;
+	while (i < dst->size)
+	{
+		tmp->m[i] = dst->v[i];
+		i++;
+	}
+	if (ftm_matmul(tmp, mat) == NULL)
+		return (NULL);
+	i = 0;
+	while (i < dst->size)
+	{
+		dst->v[i] = tmp->m[i];
+		i++;
+	}
 	return (dst);
 }

@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ftm_vec4dot.c                                      :+:      :+:    :+:   */
+/*   ftm_matdestroy.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/09 21:06:09 by charles           #+#    #+#             */
-/*   Updated: 2020/05/09 21:15:32 by charles          ###   ########.fr       */
+/*   Created: 2020/05/11 12:56:00 by charles           #+#    #+#             */
+/*   Updated: 2020/05/11 12:59:41 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftm_vec4.h"
+#include "libftm_mat.h"
 
-float		ftm_vec4dot(t_ftmvec4 *a, t_ftmvec4 *b)
+void		ftm_matdestroy(t_ftmmat *mat)
 {
-	return (a->v[0] * b->v[0] +
-			a->v[1] * b->v[1] +
-			a->v[2] * b->v[2] +
-			a->v[3] * b->v[3]);
+	free(mat->m);
+	free(mat);
 }

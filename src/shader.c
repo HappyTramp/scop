@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 09:35:54 by charles           #+#    #+#             */
-/*   Updated: 2020/05/11 10:54:14 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/11 12:25:16 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,3 +62,13 @@ unsigned int	shader_new(void)
 	GL_CALL(glDeleteShader(shader_fragment));
 	return (program);
 }
+
+/* static int				shader_uniform_location(unsigned int shader, const char *name) */
+/* { */
+/* 	int	location; */
+/*  */
+/* 	GL_CALL(location = glGetUniformLocation(shader, name)); */
+/* 	return (location); */
+/* } */
+
+/* void		shader_uniform_matrix4( */
