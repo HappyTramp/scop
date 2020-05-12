@@ -6,12 +6,14 @@
 #    By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/09 20:44:53 by charles           #+#    #+#              #
-#    Updated: 2020/05/12 11:43:06 by charles          ###   ########.fr        #
+#    Updated: 2020/05/12 16:03:51 by charles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 LIB = ar rcs
 RM = rm -f
+MAKE = make --no-print-directory
+JOBS = 4
 
 SRC_DIR = src
 INC_DIR = inc
@@ -29,21 +31,26 @@ OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 OBJ_SUB_DIR = $(shell find $(SRC_DIR) -type d | sed 's/$(SRC_DIR)/$(OBJ_DIR)/')
 
-all: prebuild $(NAME)
+all: prebuild
+	@$(MAKE) -j$(JOBS) $(NAME)
 
 prebuild:
-	mkdir -p $(OBJ_DIR) $(OBJ_SUB_DIR)
+	@mkdir -p $(OBJ_DIR) $(OBJ_SUB_DIR)
 
 $(NAME): $(OBJ) $(INC)
-	$(LIB) $@ $(OBJ)
+	@echo "Linking: $@"
+	@$(LIB) $@ $(OBJ)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CCFLAGS) -c -o $@ $<
+	@echo "Compiling: $@"
+	@$(CC) $(CCFLAGS) -c -o $@ $<
 
 clean:
-	$(RM) $(OBJ)
+	@echo "Removing objects"
+	@$(RM) $(OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
+	@echo "Removing $(NAME)"
+	@$(RM) $(NAME)
 
 re: fclean all

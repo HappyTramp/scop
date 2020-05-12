@@ -6,12 +6,12 @@
 #    By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/09 10:24:52 by charles           #+#    #+#              #
-#    Updated: 2020/05/12 14:04:16 by charles          ###   ########.fr        #
+#    Updated: 2020/05/12 16:07:23 by charles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-MAKE = make
 RM = rm -f
+MAKE = make --no-print-directory
 
 VENDOR_DIR = vendor
 LIBFT_DIR = $(VENDOR_DIR)/libft
@@ -38,19 +38,23 @@ INC = $(shell find $(INC_DIR) -type f -name '*.h')
 all: prebuild $(NAME)
 
 prebuild:
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJ) libft_all libftm_all
-	$(CC) -o $@ $(OBJ) $(LDFLAGS)
+	@echo "Linking $@"
+	@$(CC) -o $@ $(OBJ) $(LDFLAGS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
-	$(CC) $(CCFLAGS) -c -o $@ $<
+	@echo "Compiling $@"
+	@$(CC) $(CCFLAGS) -c -o $@ $<
 
 cleanloc:
-	$(RM) $(OBJ)
+	@echo "Compiling objects"
+	@$(RM) $(OBJ)
 
 fcleanloc: cleanloc
-	$(RM) $(NAME)
+	@echo "Removing $(NAME)"
+	@$(RM) $(NAME)
 
 reloc: fcleanloc all
 

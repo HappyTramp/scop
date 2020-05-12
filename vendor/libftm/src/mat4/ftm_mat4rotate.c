@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 11:44:18 by charles           #+#    #+#             */
-/*   Updated: 2020/05/12 14:05:18 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/12 17:07:23 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ t_ftmmat4	*ftm_mat4rotate(t_ftmmat4 *mat4, float theta, t_ftmvec3 *axis)
 	x = axis->v[0];
 	y = axis->v[1];
 	z = axis->v[2];
-	sin_t = sin(theta);
-	cos_t = cos(theta);
+	sin_t = sinf(theta);
+	cos_t = cosf(theta);
 	ftm_mat4init_fill(&rot, 0.0);
 	ftm_mat4set(&rot, 0, 0, cos_t + x * x * (1 - cos_t));
 	ftm_mat4set(&rot, 1, 0, y * x * (1 - cos_t) + z * sin_t);

@@ -6,15 +6,18 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 01:58:00 by charles           #+#    #+#             */
-/*   Updated: 2020/05/12 13:58:51 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/12 19:05:43 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
+bool	g_window_resized = false;
+
 void		st_resize_callback(GLFWwindow *window, int width, int height)
 {
 	(void)window;
+	g_window_resized = true;
 	glViewport(0, 0, width, height);
 }
 

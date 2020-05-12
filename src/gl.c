@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 01:31:10 by charles           #+#    #+#             */
-/*   Updated: 2020/05/12 14:07:04 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/12 18:46:49 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,14 @@ int		gl_state_init(t_gl_state *state, t_object *object)
 {
 	if ((state->shader = shader_new()) == 0)
 		return (-1);
-	GL_CALL(state->mvp_location = glGetUniformLocation(state->shader, "u_mvp"));
-	if (state->mvp_location == -1)
+	GL_CALL(state->view_location = glGetUniformLocation(state->shader, "u_view"));
+	if (state->view_location == -1)
+		return (-1);
+	GL_CALL(state->model_location = glGetUniformLocation(state->shader, "u_model"));
+	if (state->model_location == -1)
+		return (-1);
+	GL_CALL(state->proj_location = glGetUniformLocation(state->shader, "u_proj"));
+	if (state->proj_location == -1)
 		return (-1);
 
 	GL_CALL(glGenVertexArrays(1, &state->vertex_array));
@@ -49,7 +55,18 @@ void	gl_state_quit(t_gl_state *state, t_object *object)
 	free(object->indices);
 }
 
-void	gl_state_set_mvp(t_gl_state *state, t_ftmmat4 *mvp)
+void	gl_state_set_mvp(t_gl_state *state, t_ftmmat4 *model, t_ftmmat4 *view, t_ftmmat4 *proj)
 {
-	GL_CALL(glUniformMatrix4fv(state->mvp_location, 1, GL_TRUE, mvp->m));
+	if (model != NULL)
+	{
+		GL_CALL(glUniformMatrix4fv(state->model_location, 1, GL_TRUE, model->m));
+	}
+	if (view != NULL)
+	{
+		GL_CALL(glUniformMatrix4fv(state->view_location, 1, GL_TRUE, view->m));
+	}
+	if (proj != NULL)
+	{
+		GL_CALL(glUniformMatrix4fv(state->proj_location, 1, GL_TRUE, proj->m));
+	}
 }

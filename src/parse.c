@@ -6,13 +6,22 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:02:00 by charles           #+#    #+#             */
-/*   Updated: 2020/05/11 15:55:44 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/12 18:38:56 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
 
 #define SCOP_VEC_DEFAULT_SIZE 64
+
+static void	*st_iter_func_decrement_uint(void *void_uint)
+{
+	unsigned int	uint;
+
+	uint = *(unsigned int*)&void_uint;
+	uint--;
+	return (*(void**)&uint);
+}
 
 static int	st_parse_face(char **indexes_strs, t_ftvec *indices)
 {
@@ -79,11 +88,14 @@ static int	st_parse_file(int fd, t_ftvec *vertices, t_ftvec *indices)
 
 	while ((ret = ft_getline(fd, &line)) == FT_LINE)
 	{
+		printf("[%s]\n", line);
 		ret = st_parse_line(line, vertices, indices);
 		free(line);
 		if (ret == -1)
 			break ;
 	}
+	printf(">>%d\n", ret);
+		printf("[%s]\n", line);
 	if (ret == FT_ERROR)
 		return (-1);
 	if (*line != '\0')
@@ -109,6 +121,7 @@ int			parse(char *filepath, t_object *object)
 	if ((indices = ft_vecnew(SCOP_VEC_DEFAULT_SIZE)) == NULL)
 		return (-1);
 	st_parse_file(fd, vertices, indices);
+	ft_veciter_ret(indices, st_iter_func_decrement_uint);
 	object->vertices = (float*)ft_vectobuf32(vertices);
 	object->indices = (unsigned int*)ft_vectobuf32(indices);
 	object->vertices_len = vertices->size;

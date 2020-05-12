@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 10:41:44 by charles           #+#    #+#             */
-/*   Updated: 2020/05/12 13:39:34 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/12 16:28:57 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ typedef struct
 	unsigned int	index_buf;
 	unsigned int	vertex_array;
 	unsigned int	shader;
-	int				mvp_location;
+	int				model_location;
+	int				view_location;
+	int				proj_location;
 }					t_gl_state;
 
 /*
@@ -55,7 +57,7 @@ int					parse(char *filepath, t_object *object);
 
 int					gl_state_init(t_gl_state *state, t_object *object);
 void				gl_state_quit(t_gl_state *state, t_object *object);
-void				gl_state_set_mvp(t_gl_state *state, t_ftmmat4 *mvp);
+void				gl_state_set_mvp(t_gl_state *state, t_ftmmat4 *model, t_ftmmat4 *view, t_ftmmat4 *proj);
 
 /*
 ** error.c
