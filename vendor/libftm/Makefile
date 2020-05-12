@@ -6,7 +6,7 @@
 #    By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/09 20:44:53 by charles           #+#    #+#              #
-#    Updated: 2020/05/09 21:20:08 by charles          ###   ########.fr        #
+#    Updated: 2020/05/12 11:43:06 by charles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ CC = gcc
 OFLAG ?= -O0
 CCFLAGS = $(OFLAG) -I$(INC_DIR) -Wall -Wextra -Werror
 
-NAME = libft.a
+NAME = libftm.a
 
 SRC = $(shell find $(SRC_DIR) -type f -name '*.c')
 INC = $(shell find $(INC_DIR) -type f -name '*.h')

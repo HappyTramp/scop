@@ -6,11 +6,17 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 01:58:00 by charles           #+#    #+#             */
-/*   Updated: 2020/05/11 09:41:51 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/12 13:58:51 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
+
+void		st_resize_callback(GLFWwindow *window, int width, int height)
+{
+	(void)window;
+	glViewport(0, 0, width, height);
+}
 
 GLFWwindow	*glfw_init(int width, int height)
 {
@@ -28,6 +34,7 @@ GLFWwindow	*glfw_init(int width, int height)
 		return (NULL);
 	}
 	glfwMakeContextCurrent(window);
+	glfwSetFramebufferSizeCallback(window, st_resize_callback);
 	if (glewInit() != GLEW_OK)
 	{
 		glfwDestroyWindow(window);
@@ -35,6 +42,6 @@ GLFWwindow	*glfw_init(int width, int height)
 		return (NULL);
 	}
 	glfwSwapInterval(1);
-	glViewport(0, 0, width, height);
+	/* glViewport(0, 0, width, height); */
 	return (window);
 }

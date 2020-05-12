@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:02:00 by charles           #+#    #+#             */
-/*   Updated: 2020/05/11 01:29:13 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/11 15:55:44 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	st_parse_face(char **indexes_strs, t_ftvec *indices)
 	unsigned int	first;
 	unsigned int	tmp;
 
-	len = ft_split_len(indexes_strs);
+	len = ft_strslen(indexes_strs);
 	first = ft_atoi(indexes_strs[0]);
 	/* if (ft_vecpush(indices, *(void**)&first) == NULL) */
 	/* 	return (-1); */
@@ -64,11 +64,11 @@ static int	st_parse_line(char *line, t_ftvec *vertices, t_ftvec *indices)
 	if ((split = ft_split(line + 1, ' ')) == NULL)
 		return (-1);
 	ret = -1;
-	if (*line == 'v' && ft_split_len(split) == 3)
+	if (*line == 'v' && ft_strslen(split) == 3)
 		ret = st_parse_vertex(split, vertices);
-	if (*line == 'f' && ft_split_len(split) >= 3)
+	if (*line == 'f' && ft_strslen(split) >= 3)
 		ret = st_parse_face(split, indices);
-	ft_split_destroy(split);
+	ft_strsdestroy(split);
 	return (ret);
 }
 
@@ -101,7 +101,8 @@ int			parse(char *filepath, t_object *object)
 	t_ftvec	*vertices;
 	t_ftvec	*indices;
 
-	if ((fd = open(filepath, O_RDONLY)) == -1)
+	if (!has_extension(filepath, ".obj")
+		|| (fd = open(filepath, O_RDONLY)) == -1)
 		return (-1);
 	if ((vertices = ft_vecnew(SCOP_VEC_DEFAULT_SIZE)) == NULL)
 		return (-1);

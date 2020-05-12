@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 10:41:44 by charles           #+#    #+#             */
-/*   Updated: 2020/05/11 10:33:29 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/12 13:39:34 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@
 # include <stdlib.h>
 # include <GL/glew.h>
 # include <GLFW/glfw3.h>
+
 # include "libft.h"
 # include "libft_vec.h"
+# include "libftm.h"
+# include "libftm_mat4.h"
+# include "libftm_vec3.h"
 
 typedef struct
 {
@@ -36,6 +40,7 @@ typedef struct
 	unsigned int	index_buf;
 	unsigned int	vertex_array;
 	unsigned int	shader;
+	int				mvp_location;
 }					t_gl_state;
 
 /*
@@ -50,6 +55,7 @@ int					parse(char *filepath, t_object *object);
 
 int					gl_state_init(t_gl_state *state, t_object *object);
 void				gl_state_quit(t_gl_state *state, t_object *object);
+void				gl_state_set_mvp(t_gl_state *state, t_ftmmat4 *mvp);
 
 /*
 ** error.c
@@ -73,5 +79,15 @@ GLFWwindow			*glfw_init(int width, int height);
 */
 
 unsigned int	shader_new(void);
+
+/*
+** texture.c
+*/
+
+/*
+** helper.c
+*/
+
+bool			has_extension(char *filepath, char *extension);
 
 #endif
