@@ -6,7 +6,7 @@
 #    By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/09 10:24:52 by charles           #+#    #+#              #
-#    Updated: 2020/05/12 16:07:23 by charles          ###   ########.fr        #
+#    Updated: 2020/05/12 21:17:54 by charles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,9 @@ INC_DIR = inc
 OBJ_DIR = obj
 
 CC = gcc
+OFLAG ?= -O0
 CCFLAGS = -I$(LIBFT_DIR)/include -I$(INC_DIR) -I$(LIBFTM_DIR)/inc \
-		  -Wall -Wextra #-Werror
+		  $(OFLAG) -Wall -Wextra #-Werror
 LDFLAGS = -L$(LIBFT_DIR) -lft -L$(LIBFTM_DIR) -lftm -lm
 
 ifeq ($(shell uname),Linux)

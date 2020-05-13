@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/12 11:44:18 by charles           #+#    #+#             */
-/*   Updated: 2020/05/12 17:07:23 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/12 19:52:55 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_ftmmat4	*ftm_mat4rotate(t_ftmmat4 *mat4, float theta, t_ftmvec3 *axis)
 	float		z;
 	float		sin_t;
 	float		cos_t;
+	float		m_cos_t;
 	t_ftmmat4	rot;
 
 	x = axis->v[0];
@@ -48,23 +49,23 @@ t_ftmmat4	*ftm_mat4rotate(t_ftmmat4 *mat4, float theta, t_ftmvec3 *axis)
 	z = axis->v[2];
 	sin_t = sinf(theta);
 	cos_t = cosf(theta);
-	ftm_mat4init_fill(&rot, 0.0);
-	ftm_mat4set(&rot, 0, 0, cos_t + x * x * (1 - cos_t));
-	ftm_mat4set(&rot, 1, 0, y * x * (1 - cos_t) + z * sin_t);
-	ftm_mat4set(&rot, 2, 0, z * x * (1 - cos_t) + y * sin_t);
+	m_cos_t = 1.0 - cos_t;
+	ftm_mat4init_eye(&rot, 1.0);
+	ftm_mat4set(&rot, 0, 0, cos_t + x * x * m_cos_t);
+	ftm_mat4set(&rot, 1, 0, y * x * m_cos_t + z * sin_t);
+	ftm_mat4set(&rot, 2, 0, z * x * m_cos_t - y * sin_t);
 	ftm_mat4set(&rot, 3, 0, 0.0);
 
-	ftm_mat4set(&rot, 0, 1, x * y * (1 - cos_t) - z * sin_t);
-	ftm_mat4set(&rot, 1, 1, cos_t + y * y * (1 - cos_t));
-	ftm_mat4set(&rot, 2, 1, z * y * (1 - cos_t) + x * sin_t);
-	ftm_mat4set(&rot, 3, 1, 0);
+	ftm_mat4set(&rot, 0, 1, x * y * m_cos_t - z * sin_t);
+	ftm_mat4set(&rot, 1, 1, cos_t + y * y * m_cos_t);
+	ftm_mat4set(&rot, 2, 1, z * y * m_cos_t + x * sin_t);
+	ftm_mat4set(&rot, 3, 1, 0.0);
 
-	ftm_mat4set(&rot, 0, 2, x * z * (1 - cos_t) + y * sin_t);
-	ftm_mat4set(&rot, 1, 2, y * z * (1 - cos_t) - x * sin_t);
-	ftm_mat4set(&rot, 2, 2, cos_t + z * z * (1 - cos_t));
-	ftm_mat4set(&rot, 3, 2, 0);
+	ftm_mat4set(&rot, 0, 2, x * z * m_cos_t + y * sin_t);
+	ftm_mat4set(&rot, 1, 2, y * z * m_cos_t - x * sin_t);
+	ftm_mat4set(&rot, 2, 2, cos_t + z * z * m_cos_t);
+	ftm_mat4set(&rot, 3, 2, 0.0);
 
-	ftm_mat4set(&rot, 3, 3, 1.0);
 	ftm_mat4mul(mat4, &rot);
 	return (mat4);
 }

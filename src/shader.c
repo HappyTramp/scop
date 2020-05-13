@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 09:35:54 by charles           #+#    #+#             */
-/*   Updated: 2020/05/11 21:30:29 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/12 21:23:06 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static unsigned int	st_compile(char *filepath, unsigned int type)
 	if (ft_getfile(open(filepath, O_RDONLY), &file) == -1)
 		return (0);
 	GL_CALL(id = glCreateShader(type));
-	GL_CALL(glShaderSource(id, 1, (const char**)&file.data, NULL));
+	GL_CALL(glShaderSource(id, 1, (const char**)&file.data, (int*)&file.size));
 	free(file.data);
 	GL_CALL(glCompileShader(id));
 	GL_CALL(glGetShaderiv(id, GL_COMPILE_STATUS, &result));

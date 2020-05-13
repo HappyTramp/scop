@@ -3,3 +3,4 @@
 *.ghc
 a.out
 scop
+vgcore.*

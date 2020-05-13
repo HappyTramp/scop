@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 10:41:44 by charles           #+#    #+#             */
-/*   Updated: 2020/05/12 16:28:57 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/13 11:28:22 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,11 @@ unsigned int	shader_new(void);
 */
 
 bool			has_extension(char *filepath, char *extension);
+
+/*
+** center.c
+*/
+
+void			center_mat4_init_translate(t_ftmmat4 *dst, float *vertices, size_t vertices_len);
 
 #endif

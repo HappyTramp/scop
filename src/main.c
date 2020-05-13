@@ -6,11 +6,22 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 10:20:09 by charles           #+#    #+#             */
-/*   Updated: 2020/05/12 19:08:00 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/13 11:45:32 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
+
+/*
+** TODO
+** - texture
+**   - parse vt
+**   - parse coord index of f
+** - center object
+** - parse mtl file
+** - color
+**   - transition with texture
+*/
 
 void	debugmat(t_ftmmat4 *mat)
 {
@@ -18,7 +29,7 @@ void	debugmat(t_ftmmat4 *mat)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			printf("%f, ", mat->m[i * 4 + j]);
+			printf("%.2f, ", mat->m[i * 4 + j]);
 		}
 		printf("\n");
 	}
@@ -47,37 +58,24 @@ int main(int argc, char **argv)
 		return (1);
 	}
 
-	/* float positions[] = { */
-	/* 	 0.5f,  0.5f, 0.0f, */
-	/* 	 0.5f, -0.5f, 0.0f, */
-	/* 	-0.5f, -0.5f, 0.0f, */
-	/* 	-0.5f,  0.5f, 0.0f */
-	/* }; */
-	/* unsigned int index[] = { */
-	/* 	0, 1, 3, */
-	/* 	1, 2, 3 */
-	/* }; */
-	/* object.vertices = malloc(sizeof(positions)); */
-	/* ft_memcpy(object.vertices, positions, sizeof(positions)); */
-	/* object.indices = malloc(sizeof(index)); */
-	/* ft_memcpy(object.indices, index, sizeof(index)); */
-	/* object.vertices_len = 12; */
-	/* object.indices_len = 6; */
+	t_ftmmat4	center_trans;
+	center_mat4_init_translate(&center_trans, object.vertices, object.vertices_len);
+	/* debugmat(&center_trans); */
 
-	for (size_t i = 0; i < object.indices_len; i++)
-	{
-		printf("%u, ", object.indices[i++]);
-		printf("%u, ", object.indices[i++]);
-		printf("%u\n", object.indices[i]);
-	}
-	printf("yo %lu\n", object.indices_len);
-	for (size_t i = 0; i < object.vertices_len; i++)
-	{
-		printf("%f, ", object.vertices[i++]);
-		printf("%f, ", object.vertices[i++]);
-		printf("%f\n", object.vertices[i]);
-	}
-	printf("yo %lu\n", object.vertices_len);
+	/* for (size_t i = 0; i < object.indices_len; i++) */
+	/* { */
+	/* 	printf("%u, ", object.indices[i++]); */
+	/* 	printf("%u, ", object.indices[i++]); */
+	/* 	printf("%u\n", object.indices[i]); */
+	/* } */
+	/* printf("yo %lu\n", object.indices_len); */
+	/* for (size_t i = 0; i < object.vertices_len; i++) */
+	/* { */
+	/* 	printf("%f, ", object.vertices[i++]); */
+	/* 	printf("%f, ", object.vertices[i++]); */
+	/* 	printf("%f\n", object.vertices[i]); */
+	/* } */
+	/* printf("yo %lu\n", object.vertices_len); */
 
 	t_ftmmat4	model;
 	t_ftmmat4	view;
@@ -85,17 +83,21 @@ int main(int argc, char **argv)
 	t_ftmvec3	vec;
 
 	ftm_mat4init_eye(&model, 1.0);
-	ftm_mat4translate(&model, 0.0, 0.0, -5.0);
-	/* ftm_mat4rotate(&model, ftm_radian(45.0), ftm_vec3init(&vec, 0.0, 1.0, 0.0)); */
+	/* ftm_mat4translate(&model, 0.0, 0.0, -10.0); */
+	/* ftm_mat4rotate(&model, ftm_radian(45.0f), ftm_vec3init(&vec, 0.0, 1.0, 0.0)); */
+	/* ftm_mat4mul(&model, &center_trans); */
+	/* ftm_mat4rotate(&model, M_PI_4, ftm_vec3init(&vec, 0.0, 1.0, 0.0)); */
 	/* ftm_mat4scale(&model, 1.1, 1.1, 1.1); */
 
 	ftm_mat4init_eye(&view, 1.0);
 
 	ftm_mat4init_perspective(&proj, M_PI_2 / 2.0, 1.0, 0.1, 100.0);
 
+	/* printf("asfd\n"); */
+	/* printf("%f %f %f\n", vec.v[0], vec.v[1], vec.v[2]); */
 	/* debugmat(&model); */
 	/* debugmat(&view); */
-	debugmat(&proj);
+	/* debugmat(&proj); */
 
 
 	if ((window = glfw_init(400, 400)) == NULL
@@ -110,20 +112,26 @@ int main(int argc, char **argv)
 	GL_CALL(glUseProgram(state.shader));
 	gl_state_set_mvp(&state, &model, &view, &proj);
 
+	float deg = 0.0;
 	while (!glfwWindowShouldClose(window))
 	{
 		GL_CALL(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
 		GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
 
 		GL_CALL(glUseProgram(state.shader));
-		ftm_mat4rotate(&model, ftm_radian(0.5), ftm_vec3init(&vec, 1.0, 0.0, 0.0));
+
+		ftm_mat4init_eye(&model, 1.0);
+		ftm_mat4translate(&model, 0.0, 0.0, -10.0);
+		ftm_mat4rotate(&model, ftm_radian(deg), ftm_vec3init(&vec, 0.0, 1.0, 0.0));
+		ftm_mat4mul(&model, &center_trans);
+		deg += 0.4;
 
 		if (g_window_resized)
 		{
 			int w, h;
 			glfwGetFramebufferSize(window, &w, &h);
-			printf("%d %d\n", w, h);
-			ftm_mat4init_perspective(&proj, M_PI_2 / 2.0, (float)w / (float)h, 0.1, 100.0);
+			/* printf("%d %d\n", w, h); */
+			ftm_mat4init_perspective(&proj, M_PI_4, (float)w / (float)h, 0.1, 100.0);
 			g_window_resized = false;
 		}
 

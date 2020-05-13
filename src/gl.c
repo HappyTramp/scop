@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 01:31:10 by charles           #+#    #+#             */
-/*   Updated: 2020/05/12 18:46:49 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/13 09:24:08 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		gl_state_init(t_gl_state *state, t_object *object)
 	GL_CALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * object->indices_len,
 				object->indices, GL_STATIC_DRAW));
 
-	GL_CALL(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)0));
+	GL_CALL(glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (void*)0));
 	GL_CALL(glEnableVertexAttribArray(0));
 	return (0);
 }
