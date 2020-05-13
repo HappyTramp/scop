@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 10:48:15 by charles           #+#    #+#             */
-/*   Updated: 2020/05/13 12:52:43 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/13 16:43:38 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,24 @@ void	center_mat4_init_translate(t_ftmmat4 *dst, float *vertices, size_t vertices
 	ftm_mat4translate(dst, -(max.x + min.x) / 2.0f,
 							-(max.y + min.y) / 2.0f,
 							-(max.z + min.z) / 2.0f);
+}
+
+float	*texture_coord_create(float *vertices, size_t vertices_len)
+{
+	t_ftmvec3	min;
+	t_ftmvec3	max;
+	float		*coords;
+	size_t		i;
+
+	if ((coords = malloc(sizeof(float) * (vertices_len * 2))) == NULL)
+		return (NULL);
+	st_find_boundary(vertices, vertices_len, &min, &max);
+	i = 0;
+	while (i < vertices_len)
+	{
+		coords[i * 2 + 0] = (vertices[i * 4 + 0] - min.x) * (1.0 / (max.x - min.x));
+		coords[i * 2 + 1] = (vertices[i * 4 + 1] - min.y) * (1.0 / (max.y - min.y));
+		i++;
+	}
+	return (coords);
 }

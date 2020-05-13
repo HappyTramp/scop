@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 01:58:00 by charles           #+#    #+#             */
-/*   Updated: 2020/05/13 12:54:59 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/13 13:16:32 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	g_window_resized = false;
 
-void		st_resize_callback(GLFWwindow *window, int width, int height)
+static void	st_resize_callback(GLFWwindow *window, int width, int height)
 {
 	(void)window;
 	g_window_resized = true;

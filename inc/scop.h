@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 10:41:44 by charles           #+#    #+#             */
-/*   Updated: 2020/05/13 12:15:23 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/13 16:36:10 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ typedef struct
 	int				model_location;
 	int				view_location;
 	int				proj_location;
+	GLenum			polygon_mode;
+	double			polygon_mode_last_time;
+	float			fov;
 }					t_gl_state;
 
 union				u_color
@@ -99,6 +102,8 @@ unsigned int	shader_new(void);
 ** texture.c
 */
 
+unsigned int	texture_new(char *filepath);
+
 /*
 ** helper.c
 */
@@ -115,7 +120,10 @@ void			center_mat4_init_translate(t_ftmmat4 *dst, float *vertices, size_t vertic
 ** color.c
 */
 
-bool			color_merge_vertices(t_object *object);
+bool			color_merge_vertices(t_object *object, float *coords);
+
+
+float	*texture_coord_create(float *vertices, size_t vertices_len);
 
 
 #endif
