@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 01:58:00 by charles           #+#    #+#             */
-/*   Updated: 2020/05/12 19:05:43 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/13 12:54:59 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ GLFWwindow	*glfw_init(int width, int height)
 		return (NULL);
 	}
 	glfwSwapInterval(1);
-	/* glViewport(0, 0, width, height); */
+	GL_CALL(glViewport(0, 0, width, height));
+	GL_CALL(glEnable(GL_DEPTH_TEST));
 	return (window);
 }

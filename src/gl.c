@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 01:31:10 by charles           #+#    #+#             */
-/*   Updated: 2020/05/13 09:24:08 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/13 12:48:04 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,17 @@ int		gl_state_init(t_gl_state *state, t_object *object)
 	GL_CALL(glBindVertexArray(state->vertex_array));
 
 	GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, state->vertex_buf));
-	GL_CALL(glBufferData(GL_ARRAY_BUFFER, sizeof(float) * object->vertices_len,
+	GL_CALL(glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 8 * object->vertices_len,
 				object->vertices, GL_STATIC_DRAW));
 
 	GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, state->index_buf));
-	GL_CALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * object->indices_len,
+	GL_CALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 3 * object->indices_len,
 				object->indices, GL_STATIC_DRAW));
 
-	GL_CALL(glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (void*)0));
 	GL_CALL(glEnableVertexAttribArray(0));
+	GL_CALL(glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)0));
+	GL_CALL(glEnableVertexAttribArray(1));
+	GL_CALL(glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(4 * sizeof(float))));
 	return (0);
 }
 

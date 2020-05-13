@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 10:48:15 by charles           #+#    #+#             */
-/*   Updated: 2020/05/13 11:32:45 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/13 12:52:43 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	st_find_boundary(float *vertices, size_t vertices_len, t_ftmvec3 *min, t_ft
 	ftm_vec3init(min, INFINITY, INFINITY, INFINITY);
 	ftm_vec3init(max, -INFINITY, -INFINITY, -INFINITY);
 	i = 0;
-	while (i < vertices_len)
+	while (i < vertices_len * 4)
 	{
 		if (vertices[i] > max->x)
 			max->x = vertices[i];

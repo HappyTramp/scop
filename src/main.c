@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 10:20:09 by charles           #+#    #+#             */
-/*   Updated: 2020/05/13 11:45:32 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/13 13:04:45 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 ** - texture
 **   - parse vt
 **   - parse coord index of f
-** - center object
 ** - parse mtl file
 ** - color
 **   - transition with texture
@@ -62,18 +61,31 @@ int main(int argc, char **argv)
 	center_mat4_init_translate(&center_trans, object.vertices, object.vertices_len);
 	/* debugmat(&center_trans); */
 
-	/* for (size_t i = 0; i < object.indices_len; i++) */
+	if (!color_merge_vertices(&object))
+	{
+		ft_putstr("Error: couldn't create colors");
+		return (1);
+	}
+
+
+	/* for (size_t i = 0; i < object.indices_len * 3; i++) */
 	/* { */
 	/* 	printf("%u, ", object.indices[i++]); */
 	/* 	printf("%u, ", object.indices[i++]); */
 	/* 	printf("%u\n", object.indices[i]); */
 	/* } */
 	/* printf("yo %lu\n", object.indices_len); */
-	/* for (size_t i = 0; i < object.vertices_len; i++) */
+
+	/* for (size_t i = 0; i < object.vertices_len * 8; i++) */
 	/* { */
-	/* 	printf("%f, ", object.vertices[i++]); */
-	/* 	printf("%f, ", object.vertices[i++]); */
-	/* 	printf("%f\n", object.vertices[i]); */
+	/* 	printf("% f, ", object.vertices[i++]); */
+	/* 	printf("% f, ", object.vertices[i++]); */
+	/* 	printf("% f, ", object.vertices[i++]); */
+	/* 	printf("% f\tcolor: ", object.vertices[i++]); */
+	/* 	printf("% f, ", object.vertices[i++]); */
+	/* 	printf("% f, ", object.vertices[i++]); */
+	/* 	printf("% f, ", object.vertices[i++]); */
+	/* 	printf("% f\n", object.vertices[i]); */
 	/* } */
 	/* printf("yo %lu\n", object.vertices_len); */
 
@@ -93,12 +105,9 @@ int main(int argc, char **argv)
 
 	ftm_mat4init_perspective(&proj, M_PI_2 / 2.0, 1.0, 0.1, 100.0);
 
-	/* printf("asfd\n"); */
-	/* printf("%f %f %f\n", vec.v[0], vec.v[1], vec.v[2]); */
 	/* debugmat(&model); */
 	/* debugmat(&view); */
 	/* debugmat(&proj); */
-
 
 	if ((window = glfw_init(400, 400)) == NULL
 		|| gl_state_init(&state, &object) == -1)
@@ -116,7 +125,7 @@ int main(int argc, char **argv)
 	while (!glfwWindowShouldClose(window))
 	{
 		GL_CALL(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
-		GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
+		GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
 		GL_CALL(glUseProgram(state.shader));
 
@@ -138,7 +147,7 @@ int main(int argc, char **argv)
 		gl_state_set_mvp(&state, &model, &view, &proj);
 
 		GL_CALL(glBindVertexArray(state.vertex_array));
-		GL_CALL(glDrawElements(GL_TRIANGLES, object.indices_len, GL_UNSIGNED_INT, (void*)0));
+		GL_CALL(glDrawElements(GL_TRIANGLES, object.indices_len * sizeof(unsigned int), GL_UNSIGNED_INT, (void*)0));
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

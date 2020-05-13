@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 10:41:44 by charles           #+#    #+#             */
-/*   Updated: 2020/05/13 11:28:22 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/13 12:15:23 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include "libftm_mat4.h"
 # include "libftm_vec3.h"
 
+
 typedef struct
 {
 	float			*vertices;
@@ -44,6 +45,18 @@ typedef struct
 	int				view_location;
 	int				proj_location;
 }					t_gl_state;
+
+union				u_color
+{
+	float			data[4];
+	struct
+	{
+		float		r;
+		float		g;
+		float		b;
+		float		a;
+	};
+};
 
 /*
 ** parse.c
@@ -97,5 +110,12 @@ bool			has_extension(char *filepath, char *extension);
 */
 
 void			center_mat4_init_translate(t_ftmmat4 *dst, float *vertices, size_t vertices_len);
+
+/*
+** color.c
+*/
+
+bool			color_merge_vertices(t_object *object);
+
 
 #endif

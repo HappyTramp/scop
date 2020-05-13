@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:02:00 by charles           #+#    #+#             */
-/*   Updated: 2020/05/13 10:15:43 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/13 12:25:46 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,8 +155,8 @@ int			parse(char *filepath, t_object *object)
 	ft_veciter_ret(indices, st_iter_func_decrement_uint);
 	object->vertices = (float*)ft_vectobuf32(vertices);
 	object->indices = (unsigned int*)ft_vectobuf32(indices);
-	object->vertices_len = vertices->size;
-	object->indices_len = indices->size;
+	object->vertices_len = vertices->size / 4;
+	object->indices_len = indices->size / 3;
 	ft_vecdestroy(vertices, NULL);
 	ft_vecdestroy(indices, NULL);
 	return (0);
