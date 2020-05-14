@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 15:25:52 by charles           #+#    #+#             */
-/*   Updated: 2020/05/14 16:39:13 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/14 18:49:43 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ static void	st_handle_keydown(t_state *state, SDL_Keycode sym)
 		else if (state->polygon_mode == GL_POINT)
 			state->polygon_mode = GL_FILL;
 		GL_CALL(glPolygonMode(GL_FRONT_AND_BACK, state->polygon_mode));
+	}
+	else if (sym == SDLK_t)
+	{
+		state->transition = true;
 	}
 }
 

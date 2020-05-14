@@ -6,11 +6,13 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 01:31:10 by charles           #+#    #+#             */
-/*   Updated: 2020/05/14 16:39:59 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/14 19:02:56 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "scop.h"
+
+#define COLOR_RATIO_INC -0.02
 
 bool		state_init(t_state *state, t_model_data *data)
 {
@@ -39,6 +41,8 @@ bool		state_init(t_state *state, t_model_data *data)
 	state->fov = M_PI_4;
 	state->running = true;
 	state->polygon_mode = GL_FILL;
+	state->transition = false;
+	state->is_texture = false;
 	SDL_GL_GetDrawableSize(state->window, &state->width, &state->height);
 	GL_CALL(glViewport(0, 0, state->width, state->height));
 	return (true);
@@ -53,6 +57,16 @@ void		state_run(t_state *state)
 	rotation = M_PI_4;
 	while (state->running)
 	{
+		if (state->transition)
+		{
+			state->scene.color_ratio += (state->is_texture ? -1.0 : 1.0) * COLOR_RATIO_INC;
+			if ((!state->is_texture && state->scene.color_ratio <= 0.0)
+				|| (state->is_texture && state->scene.color_ratio >= 1.0))
+			{
+				state->transition = false;
+				state->is_texture = !state->is_texture;
+			}
+		}
 		GL_CALL(glClearColor(0.1f, 0.1f, 0.1f, 1.0f));
 		GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 

@@ -13,7 +13,7 @@ out vec2 v_texture_coord;
 
 void main()
 {
+    gl_Position = u_proj * u_view * u_model * in_position;
     v_color = in_color;
     v_texture_coord = in_texture_coord;
-    gl_Position = u_proj * u_view * u_model * in_position;
 }

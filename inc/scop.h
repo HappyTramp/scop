@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 10:41:44 by charles           #+#    #+#             */
-/*   Updated: 2020/05/14 16:29:38 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/14 19:08:24 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct
 		t_ftmmat4	view;
 		t_ftmmat4	proj;
 	}				transform;
+	float			color_ratio;
 }					t_scene;
 
 typedef struct
@@ -70,6 +71,7 @@ typedef struct
 		int			view;
 		int			proj;
 		int			texture;
+		int			color_ratio;
 	}				location;
 }					t_shader;
 
@@ -84,6 +86,8 @@ typedef struct
 	t_shader		shader;
 	GLenum			polygon_mode;
 	float			fov;
+	bool			transition;
+	bool			is_texture;
 }					t_state;
 
 union				u_color
@@ -131,9 +135,15 @@ int					parse(char *filepath, t_model_data *object);
 ** error.c
 */
 
-# define GL_CALL(x) error_clear(); \
-                    x; \
-                    error_check(#x, __FILE__, __LINE__)
+# ifndef SCOP_RELEASE
+#  define GL_CALL(x) do {                \
+	error_clear();                       \
+	x;                                   \
+	error_check(#x, __FILE__, __LINE__); \
+} while (0)
+# else
+#  define GL_CALL(x) x
+# endif
 
 void				error_clear(void);
 void				error_check(char *code, char *filename, int line_num);

@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 09:35:54 by charles           #+#    #+#             */
-/*   Updated: 2020/05/14 16:41:29 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/14 18:48:17 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ bool				shader_init(t_shader *shader)
 	GL_CALL(glDeleteShader(shader_fragment));
 	if (!st_get_uniform_location(shader->id, &shader->location.model, "u_model")
 		|| !st_get_uniform_location(shader->id, &shader->location.view, "u_view")
-		|| !st_get_uniform_location(shader->id, &shader->location.proj, "u_proj"))
+		|| !st_get_uniform_location(shader->id, &shader->location.proj, "u_proj")
+		|| !st_get_uniform_location(shader->id, &shader->location.color_ratio, "u_color_ratio"))
 		/* || !st_get_uniform_location(shader->id, &shader->location.texture, "u_texture")) */
 		return (false);
 	return (true);
@@ -81,5 +82,6 @@ void				shader_set_uniforms(t_shader *shader, t_scene *scene)
 	GL_CALL(glUniformMatrix4fv(shader->location.model, 1, GL_TRUE, scene->transform.model.m));
 	GL_CALL(glUniformMatrix4fv(shader->location.view, 1, GL_TRUE, scene->transform.view.m));
 	GL_CALL(glUniformMatrix4fv(shader->location.proj, 1, GL_TRUE, scene->transform.proj.m));
+	GL_CALL(glUniform1f(shader->location.color_ratio, scene->color_ratio));
 	/* GL_CALL(glUniformMatrix4fv(shader->location.texture, 1, GL_TRUE, scene->transform.proj.m)); */
 }

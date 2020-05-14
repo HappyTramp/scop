@@ -6,7 +6,7 @@
 #    By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/09 10:24:52 by charles           #+#    #+#              #
-#    Updated: 2020/05/14 15:30:27 by charles          ###   ########.fr        #
+#    Updated: 2020/05/14 19:05:41 by charles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,9 @@ OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 INC = $(shell find $(INC_DIR) -type f -name '*.h')
 
 all: prebuild $(NAME)
+
+release: CFLAGS += -DSCOP_RELEASE -O3
+release: re
 
 prebuild:
 	@mkdir -p $(OBJ_DIR)

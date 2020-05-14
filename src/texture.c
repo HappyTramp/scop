@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 14:27:34 by charles           #+#    #+#             */
-/*   Updated: 2020/05/14 16:37:42 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/14 18:41:44 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,28 +75,32 @@ unsigned int	texture_create(char *filepath)
 	GL_CALL(glBindTexture(GL_TEXTURE_2D, texture));
 	GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
 	GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
-	GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-	GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
-	GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB8, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data));
+	GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+	GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+	GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data));
+	GL_CALL(glGenerateMipmap(GL_TEXTURE_2D));
 	free(data);
 	return (texture);
 }
 
+/*
+** https://www.wikiwand.com/en/UV_mapping#/Finding_UV_on_a_sphere
+*/
+
 void	texture_coord_init(float *vertices, size_t vertices_num)
 {
-	t_ftmvec3	min;
-	t_ftmvec3	max;
+	t_ftmvec3	v;
 	size_t		i;
-	size_t		index;
 
-	helper_find_boundary(vertices, vertices_num, &min, &max);
 	i = 0;
 	while (i < vertices_num)
 	{
-		index = i + VERTEX_TEX_COORD_OFFSET;
-		vertices[index] = 0.0; //(vertices[index] - min.x) * (1.0 / (max.x - min.x));
-		index++;
-		vertices[index] = 1.0; //(vertices[index] - min.y) * (1.0 / (max.y - min.y));
+		v.x = vertices[i + 0];
+		v.y = vertices[i + 1];
+		v.z = vertices[i + 2];
+		ftm_vec3normalize(&v);
+		vertices[i + VERTEX_TEX_COORD_OFFSET + 0] = 15.0 * (0.5 + atan2(v.z, v.x) / M_PI * 0.5);
+		vertices[i + VERTEX_TEX_COORD_OFFSET + 1] = 15.0 * (v.y / 10.0);
 		i += VERTEX_COUNT;
 	}
 }

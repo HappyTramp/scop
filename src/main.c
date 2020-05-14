@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 10:20:09 by charles           #+#    #+#             */
-/*   Updated: 2020/05/14 16:16:24 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/14 16:48:35 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,6 @@ int main(int argc, char **argv)
 		printf("% f ", data.vertices[i++]);
 		printf("% f\n", data.vertices[i]);
 	}
-
-	/* GL_CALL(glUniform1i(glGetUniformLocation(state.shader, "u_texture"), 0)); */
-	/* GL_CALL(glActiveTexture(GL_TEXTURE0)); */
-	/* GL_CALL(glBindTexture(GL_TEXTURE_2D, texture)); */
 
 	if (!state_init(&state, &data))
 		return (1);

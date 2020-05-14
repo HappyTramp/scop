@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/14 12:28:57 by charles           #+#    #+#             */
-/*   Updated: 2020/05/14 16:35:25 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/14 18:48:00 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void		scene_init(t_scene *scene, t_model_data *data)
 
 	ftm_mat4init_eye(&scene->transform.view, 1.0);
 	st_transform_center_init(&scene->transform.center, data->vertices, data->vertices_num);
+	scene->color_ratio = 1.0;
 }
 
 void		scene_update_proj(t_scene *scene, float fov, int width, int height)
