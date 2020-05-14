@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 09:35:54 by charles           #+#    #+#             */
-/*   Updated: 2020/05/14 14:02:56 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/14 16:41:29 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,16 @@ static unsigned int	st_compile(char *filepath, unsigned int type)
 	return (id);
 }
 
-static bool	st_get_uniform_location(unsigned int shader_id, int	*location, char *name)
+static bool			st_get_uniform_location(
+		unsigned int shader_id,
+		int	*location,
+		char *name)
 {
 	GL_CALL(*location = glGetUniformLocation(shader_id, name));
 	return (*location != -1);
 }
 
-bool	shader_init(t_shader *shader)
+bool				shader_init(t_shader *shader)
 {
 	unsigned int	shader_vertex;
 	unsigned int	shader_fragment;
@@ -68,13 +71,15 @@ bool	shader_init(t_shader *shader)
 	if (!st_get_uniform_location(shader->id, &shader->location.model, "u_model")
 		|| !st_get_uniform_location(shader->id, &shader->location.view, "u_view")
 		|| !st_get_uniform_location(shader->id, &shader->location.proj, "u_proj"))
+		/* || !st_get_uniform_location(shader->id, &shader->location.texture, "u_texture")) */
 		return (false);
 	return (true);
 }
 
-void	shader_update_mvp(t_shader *shader, t_scene *scene)
+void				shader_set_uniforms(t_shader *shader, t_scene *scene)
 {
 	GL_CALL(glUniformMatrix4fv(shader->location.model, 1, GL_TRUE, scene->transform.model.m));
 	GL_CALL(glUniformMatrix4fv(shader->location.view, 1, GL_TRUE, scene->transform.view.m));
 	GL_CALL(glUniformMatrix4fv(shader->location.proj, 1, GL_TRUE, scene->transform.proj.m));
+	/* GL_CALL(glUniformMatrix4fv(shader->location.texture, 1, GL_TRUE, scene->transform.proj.m)); */
 }

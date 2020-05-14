@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 01:43:45 by charles           #+#    #+#             */
-/*   Updated: 2020/05/11 10:42:05 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/14 16:40:27 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 void	error_clear(void)
 {
-    while (glGetError() != GL_NO_ERROR)
-        ;
+	while (glGetError() != GL_NO_ERROR)
+		;
 }
 
 void	error_check(char *code, char *filename, int line_num)
 {
-    GLenum	err;
+	GLenum	err;
 	bool	occured;
 
-    occured = false;
-    while ((err = glGetError()) != GL_NO_ERROR)
-    {
+	occured = false;
+	while ((err = glGetError()) != GL_NO_ERROR)
+	{
 		ft_putstr("[ERROR opengl] (");
 		ft_putnbr(err);
 		if (err == GL_INVALID_OPERATION)
@@ -44,14 +44,14 @@ void	error_check(char *code, char *filename, int line_num)
 			ft_putstr("GL_INVALID_ENUM");
 		}
 		ft_putstr(") ");
-        ft_putstr(code);
+		ft_putstr(code);
 		ft_putstr(" at ");
 		ft_putstr(filename);
 		ft_putchar(':');
 		ft_putnbr(line_num);
 		ft_putchar('\n');
-        occured = true;
-    }
+		occured = true;
+	}
 	if (occured)
 		exit(EXIT_FAILURE);
 }

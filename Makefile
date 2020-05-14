@@ -6,7 +6,7 @@
 #    By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/09 10:24:52 by charles           #+#    #+#              #
-#    Updated: 2020/05/14 14:05:00 by charles          ###   ########.fr        #
+#    Updated: 2020/05/14 15:30:27 by charles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ all: prebuild $(NAME)
 
 prebuild:
 	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/graphic
 
 $(NAME): $(OBJ) libft_all libftm_all
 	@echo "Linking $@"

@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:02:00 by charles           #+#    #+#             */
-/*   Updated: 2020/05/14 14:01:26 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/14 16:01:53 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,13 @@ static int	st_parse_vertex(char **positions_strs, t_ftvec *vertices)
 		tmp = 1.0f;
 		ft_vecpush(vertices, *((void**)&tmp));
 	}
+	tmp = 1.0f;
+	ft_vecpush(vertices, *((void**)&tmp));
+	ft_vecpush(vertices, *((void**)&tmp));
+	ft_vecpush(vertices, *((void**)&tmp));
+	ft_vecpush(vertices, *((void**)&tmp));
+	ft_vecpush(vertices, *((void**)&tmp));
+	ft_vecpush(vertices, *((void**)&tmp));
 	return (0);
 }
 
@@ -144,7 +151,7 @@ int			parse(char *filepath, t_model_data *data)
 	t_ftvec	*vertices;
 	t_ftvec	*indices;
 
-	if (!has_extension(filepath, ".obj")
+	if (!helper_check_extension(filepath, ".obj")
 		|| (fd = open(filepath, O_RDONLY)) == -1)
 		return (-1);
 	if ((vertices = ft_vecnew(SCOP_VEC_DEFAULT_SIZE)) == NULL)
@@ -155,8 +162,8 @@ int			parse(char *filepath, t_model_data *data)
 	ft_veciter_ret(indices, st_iter_func_decrement_uint);
 	data->vertices = (float*)ft_vectobuf32(vertices);
 	data->indices = (unsigned int*)ft_vectobuf32(indices);
-	data->vertices_size = vertices->size;
-	data->indices_size = indices->size;
+	data->vertices_num = vertices->size;
+	data->indices_num = indices->size;
 	ft_vecdestroy(vertices, NULL);
 	ft_vecdestroy(indices, NULL);
 	return (0);
