@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:02:00 by charles           #+#    #+#             */
-/*   Updated: 2020/05/13 12:25:46 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/14 14:01:26 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,34 +71,34 @@ static int	st_parse_vertex(char **positions_strs, t_ftvec *vertices)
 	return (0);
 }
 
-static int	st_parse_texture_coord(char **coord_strs, t_ftvec *coords)
-{
-	float	tmp;
-
-	tmp = ft_atof(coord_strs[0]);
-	ft_vecpush(coords, *((void**)&tmp));
-	if (coord_strs[1] != NULL)
-	{
-		tmp = ft_atof(coord_strs[1]);
-		ft_vecpush(coords, *((void**)&tmp));
-	}
-	else
-	{
-		tmp = 0.0f;
-		ft_vecpush(coords, *((void**)&tmp));
-	}
-	if (ft_strslen(coord_strs) == 3)
-	{
-		tmp = ft_atof(coord_strs[2]);
-		ft_vecpush(coords, *((void**)&tmp));
-	}
-	else
-	{
-		tmp = 0.0f;
-		ft_vecpush(coords, *((void**)&tmp));
-	}
-	return (0);
-}
+/* static int	st_parse_texture_coord(char **coord_strs, t_ftvec *coords) */
+/* { */
+/* 	float	tmp; */
+/*  */
+/* 	tmp = ft_atof(coord_strs[0]); */
+/* 	ft_vecpush(coords, *((void**)&tmp)); */
+/* 	if (coord_strs[1] != NULL) */
+/* 	{ */
+/* 		tmp = ft_atof(coord_strs[1]); */
+/* 		ft_vecpush(coords, *((void**)&tmp)); */
+/* 	} */
+/* 	else */
+/* 	{ */
+/* 		tmp = 0.0f; */
+/* 		ft_vecpush(coords, *((void**)&tmp)); */
+/* 	} */
+/* 	if (ft_strslen(coord_strs) == 3) */
+/* 	{ */
+/* 		tmp = ft_atof(coord_strs[2]); */
+/* 		ft_vecpush(coords, *((void**)&tmp)); */
+/* 	} */
+/* 	else */
+/* 	{ */
+/* 		tmp = 0.0f; */
+/* 		ft_vecpush(coords, *((void**)&tmp)); */
+/* 	} */
+/* 	return (0); */
+/* } */
 
 static int	st_parse_line(char *line, t_ftvec *vertices, t_ftvec *indices)
 {
@@ -138,7 +138,7 @@ static int	st_parse_file(int fd, t_ftvec *vertices, t_ftvec *indices)
 	return (0);
 }
 
-int			parse(char *filepath, t_object *object)
+int			parse(char *filepath, t_model_data *data)
 {
 	int		fd;
 	t_ftvec	*vertices;
@@ -153,10 +153,10 @@ int			parse(char *filepath, t_object *object)
 		return (-1);
 	st_parse_file(fd, vertices, indices);
 	ft_veciter_ret(indices, st_iter_func_decrement_uint);
-	object->vertices = (float*)ft_vectobuf32(vertices);
-	object->indices = (unsigned int*)ft_vectobuf32(indices);
-	object->vertices_len = vertices->size / 4;
-	object->indices_len = indices->size / 3;
+	data->vertices = (float*)ft_vectobuf32(vertices);
+	data->indices = (unsigned int*)ft_vectobuf32(indices);
+	data->vertices_size = vertices->size;
+	data->indices_size = indices->size;
 	ft_vecdestroy(vertices, NULL);
 	ft_vecdestroy(indices, NULL);
 	return (0);

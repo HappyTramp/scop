@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 09:35:54 by charles           #+#    #+#             */
-/*   Updated: 2020/05/12 21:23:06 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/14 14:02:56 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,37 @@ static unsigned int	st_compile(char *filepath, unsigned int type)
 	return (id);
 }
 
-unsigned int	shader_new(void)
+static bool	st_get_uniform_location(unsigned int shader_id, int	*location, char *name)
+{
+	GL_CALL(*location = glGetUniformLocation(shader_id, name));
+	return (*location != -1);
+}
+
+bool	shader_init(t_shader *shader)
 {
 	unsigned int	shader_vertex;
 	unsigned int	shader_fragment;
-	unsigned int	program;
 
 	if ((shader_vertex = st_compile(SHADER_VERTEX_FILEPATH, GL_VERTEX_SHADER)) == 0
 		|| (shader_fragment = st_compile(SHADER_FRAGMENT_FILEPATH, GL_FRAGMENT_SHADER)) == 0)
-		return (0);
-	GL_CALL(program = glCreateProgram());
-	GL_CALL(glAttachShader(program, shader_vertex));
-	GL_CALL(glAttachShader(program, shader_fragment));
-	GL_CALL(glLinkProgram(program));
-	GL_CALL(glValidateProgram(program));
+		return (false);
+	GL_CALL(shader->id = glCreateProgram());
+	GL_CALL(glAttachShader(shader->id, shader_vertex));
+	GL_CALL(glAttachShader(shader->id, shader_fragment));
+	GL_CALL(glLinkProgram(shader->id));
+	GL_CALL(glValidateProgram(shader->id));
 	GL_CALL(glDeleteShader(shader_vertex));
 	GL_CALL(glDeleteShader(shader_fragment));
-	return (program);
+	if (!st_get_uniform_location(shader->id, &shader->location.model, "u_model")
+		|| !st_get_uniform_location(shader->id, &shader->location.view, "u_view")
+		|| !st_get_uniform_location(shader->id, &shader->location.proj, "u_proj"))
+		return (false);
+	return (true);
 }
 
-/* static int				shader_uniform_location(unsigned int shader, const char *name) */
-/* { */
-/* 	int	location; */
-/*  */
-/* 	GL_CALL(location = glGetUniformLocation(shader, name)); */
-/* 	return (location); */
-/* } */
-
-/* void		shader_uniform_matrix4( */
+void	shader_update_mvp(t_shader *shader, t_scene *scene)
+{
+	GL_CALL(glUniformMatrix4fv(shader->location.model, 1, GL_TRUE, scene->transform.model.m));
+	GL_CALL(glUniformMatrix4fv(shader->location.view, 1, GL_TRUE, scene->transform.view.m));
+	GL_CALL(glUniformMatrix4fv(shader->location.proj, 1, GL_TRUE, scene->transform.proj.m));
+}

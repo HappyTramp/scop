@@ -6,7 +6,7 @@
 #    By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/09 10:24:52 by charles           #+#    #+#              #
-#    Updated: 2020/05/12 21:17:54 by charles          ###   ########.fr        #
+#    Updated: 2020/05/14 14:05:00 by charles          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,12 @@ OBJ_DIR = obj
 CC = gcc
 OFLAG ?= -O0
 CCFLAGS = -I$(LIBFT_DIR)/include -I$(INC_DIR) -I$(LIBFTM_DIR)/inc \
+		  $(shell pkg-config --cflags sdl2) \
 		  $(OFLAG) -Wall -Wextra #-Werror
 LDFLAGS = -L$(LIBFT_DIR) -lft -L$(LIBFTM_DIR) -lftm -lm
 
 ifeq ($(shell uname),Linux)
-	LDFLAGS += -lglfw -lGL -lglut -lGLEW
+	LDFLAGS += $(shell pkg-config --libs glew sdl2)
 endif
 
 NAME = scop
