@@ -6,7 +6,7 @@
 /*   By: charles <charles.cabergs@gmail.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 10:20:09 by charles           #+#    #+#             */
-/*   Updated: 2020/05/14 16:48:35 by charles          ###   ########.fr       */
+/*   Updated: 2020/05/14 19:10:40 by charles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,7 @@
 ** - texture
 **   - parse vt
 **   - parse coord index of f
-**   - transition color/texture
-** - cleaner code
 */
-
-void	debugmat(t_ftmmat4 *mat)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			printf("%.2f, ", mat->m[i * 4 + j]);
-		}
-		printf("\n");
-	}
-	printf("\n");
-}
 
 int main(int argc, char **argv)
 {

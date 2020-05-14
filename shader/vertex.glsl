@@ -15,5 +15,6 @@ void main()
 {
     gl_Position = u_proj * u_view * u_model * in_position;
     v_color = in_color;
-    v_texture_coord = in_texture_coord;
+    /* v_texture_coord = in_texture_coord; */
+    v_texture_coord = vec2(in_position.y, in_position.z);
 }
